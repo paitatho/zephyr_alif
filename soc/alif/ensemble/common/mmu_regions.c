@@ -38,10 +38,24 @@ static const struct arm_mmu_region mmu_regions[] = {
 		0x11000,
 		MT_DEVICE | MATTR_SHARED | MPERM_R | MPERM_W),
 
-	/* PINMUX, VBAT, AON regions */
+	/* CGU
+		This entry will be store in the same L2 page as HOST PERIPHERALS.
+	*/
+	MMU_REGION_FLAT_ENTRY("CGU",
+		0x1A602000,
+		0x1000,
+		MT_DEVICE | MATTR_SHARED | MPERM_R | MPERM_W),
+
+	/* CGU, PINMUX, AON, VBAT, ANA regions */
 	MMU_REGION_FLAT_ENTRY("HOST PERIPHERALS",
 		0x1A603000,
 		0x7000,
+		MT_DEVICE | MATTR_SHARED | MPERM_R | MPERM_W),
+
+	/* USB (DWC3) controller registers */
+	MMU_REGION_FLAT_ENTRY("USB",
+		0x48200000,
+		0x100000,
 		MT_DEVICE | MATTR_SHARED | MPERM_R | MPERM_W),
 
 #if DT_NODE_EXISTS(DT_NODELABEL(ethosu1))

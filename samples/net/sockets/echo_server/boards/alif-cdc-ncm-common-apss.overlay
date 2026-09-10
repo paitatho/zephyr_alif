@@ -1,0 +1,41 @@
+/*
+ * Copyright (c) 2026 Alif Semiconductor
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <dt-bindings/misc/alif_aipm_common.h>
+#include <alif/ensemble/common/aipm_ensemble_gen1.dtsi>
+
+&{/soc} {
+
+	usb: usb@48200000 {
+		compatible = "snps,dwc3";
+		reg = <0x48200000 0xca04>;
+		clocks = <&clockctrl ALIF_USB_CLK>;
+		maximum-speed = "high-speed";
+		interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+		num-out-eps = <4>;
+		num-in-eps = <4>;
+		status = "okay";
+	};
+};
+
+zephyr_udc0: &usb {
+	status = "okay";
+};
+
+&aipm_run_default {
+	phy-pwr-gating = <ALIF_PHY_GATE_USB_MASK>;
+	aipm-power-domains = <1005>;
+	memory-blocks = <32771>;
+	cpu-clk-freq = <1>;
+};
+
+/ {
+	cdc_ncm_eth0: cdc_ncm_eth0 {
+		compatible = "zephyr,cdc-ncm-ethernet";
+		local-mac-address = [02 00 00 00 00 01];
+		remote-mac-address = "00005E005301";
+	};
+};

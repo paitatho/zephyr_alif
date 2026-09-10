@@ -15,7 +15,8 @@
 #elif defined(CONFIG_RTSS_HE)
 #define RESET_STATUS_REG            (AON_RTSS_HE_RESET)
 #else
-#error "Invalid CPU"
+// Do nothing, APSS does not have a reset status register
+#warning "Invalid CPU or APSS"
 #endif
 
 #define DEV_SERIAL_NUM_SIZE                     8
@@ -80,10 +81,14 @@ ssize_t z_impl_hwinfo_get_device_id(uint8_t *buffer, size_t length)
 	return length;
 }
 
+// For APSS the function set the cause to 0.
 int z_impl_hwinfo_get_reset_cause(uint32_t *cause)
 {
 	uint32_t flags = 0;
-	uint32_t reason = sys_read32(RESET_STATUS_REG);
+	uint32_t reason = 0;
+	#if defined(CONFIG_RTSS_HP) || defined(CONFIG_RTSS_HE)
+	reason = sys_read32(RESET_STATUS_REG);
+
 
 	if (reason & POR_OR_SESS_RESET) {
 		flags |= RESET_POR;
@@ -97,18 +102,22 @@ int z_impl_hwinfo_get_reset_cause(uint32_t *cause)
 	if (reason & RESET_REQ_TO_THE_POWER_DOMAIN) {
 		flags |= RESET_SOFTWARE;
 	}
+	#endif
 	*cause = flags;
 
 	return 0;
 }
 
+// For APSS always return 0.
 int z_impl_hwinfo_clear_reset_cause(void)
 {
 	/* Read the set bits */
+	#if defined(CONFIG_RTSS_HP) || defined(CONFIG_RTSS_HE)
 	uint32_t reason = sys_read32(RESET_STATUS_REG);
 
 	/* Write them back to clear the reset */
 	sys_write32(reason, RESET_STATUS_REG);
+	#endif
 
 	return 0;
 }
