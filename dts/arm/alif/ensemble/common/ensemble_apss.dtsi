@@ -1,0 +1,21 @@
+/* Copyright (c) 2025 Alif Semiconductor
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <alif/common/alif_common.dtsi>
+#include <dt-bindings/misc/alif_aipm_common.h>
+#include <alif/ensemble/common/aipm_ensemble_gen1.dtsi>
+
+&aipm_run_default {
+	cpu-clk-freq = <ALIF_CLOCK_FREQ_800MHZ>;
+};
+
+/ {
+	non_cacheable: non_cacheable@2100000 {
+		compatible = "zephyr,memory-region";
+		reg = <0x2100000 DT_SIZE_K(512)>;
+		zephyr,memory-region = "NON_CACHEABLE0";
+		status = "disabled";
+	};
+};
