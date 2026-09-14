@@ -46,17 +46,29 @@ static const struct arm_mmu_region mmu_regions[] = {
 		0x1000,
 		MT_DEVICE | MATTR_SHARED | MPERM_R | MPERM_W),
 
+<<<<<<< HEAD
 	/* CGU, PINMUX, AON, VBAT, ANA regions */
+=======
+	/*PINMUX, AON, VBAT, ANA regions */
+>>>>>>> eb7953bcbd2 (alif: mmu_regions: add CGU and USB entry)
 	MMU_REGION_FLAT_ENTRY("HOST PERIPHERALS",
 		0x1A603000,
 		0x7000,
 		MT_DEVICE | MATTR_SHARED | MPERM_R | MPERM_W),
 
+<<<<<<< HEAD
+=======
+#if DT_NODE_HAS_STATUS(DT_NODELABEL(usb), okay)
+>>>>>>> eb7953bcbd2 (alif: mmu_regions: add CGU and USB entry)
 	/* USB (DWC3) controller registers */
 	MMU_REGION_FLAT_ENTRY("USB",
 		0x48200000,
 		0x100000,
 		MT_DEVICE | MATTR_SHARED | MPERM_R | MPERM_W),
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> eb7953bcbd2 (alif: mmu_regions: add CGU and USB entry)
 
 #if DT_NODE_EXISTS(DT_NODELABEL(ethosu1))
 	/* Ethos-U85 NPU register space — device memory */
