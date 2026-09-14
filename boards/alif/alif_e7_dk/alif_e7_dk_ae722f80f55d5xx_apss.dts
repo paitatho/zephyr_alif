@@ -10,6 +10,7 @@
 #include <zephyr/dt-bindings/interrupt-controller/arm-gic.h>
 #include <zephyr/dt-bindings/pinctrl/ensemble-pinctrl.h>
 #include <zephyr/dt-bindings/clock/alif_ensemble_clocks.h>
+#include <alif/ensemble/common/ensemble_apss.dtsi>
 
 / {
 	compatible = "arm,alif-e7-dk-ae722f80f55d5xx-apss";
@@ -176,6 +177,17 @@
 						 <PIN_P9_4__UART7_TX_B>;
 				};
 			};
+		};
+
+		usb: usb@48200000 {
+			compatible = "snps,dwc3";
+			reg = <0x48200000 0xca04>;
+			clocks = <&clockctrl ALIF_USB_CLK>;
+			maximum-speed = "high-speed";
+			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+			num-out-eps = <4>;
+			num-in-eps = <4>;
+			status = "disabled";
 		};
 
 		uart0: uart@49018000 {
