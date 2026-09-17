@@ -10,10 +10,6 @@
 	phy-pwr-gating = <ALIF_PHY_GATE_USB_MASK>;
 };
 
-&non_cacheable {
-	status = "okay";
-};
-
 / {
 	cdc_ncm_eth0: cdc_ncm_eth0 {
 		compatible = "zephyr,cdc-ncm-ethernet";
