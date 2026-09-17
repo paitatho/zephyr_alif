@@ -88,21 +88,6 @@ static const struct arm_mmu_region mmu_regions[] = {
 		MT_NORMAL | MPERM_R | MPERM_W | MATTR_SHARED |
 		MATTR_MAY_MAP_L1_SECTION),
 #endif
-
-#if DT_NODE_HAS_STATUS(DT_NODELABEL(non_cacheable), okay)
-	/* NON_CACHEABLE0 region in SRAM0 — holds the UDC/DWC3 DMA buffers
-	 * (udc_dwc3 event buffer, driver/TRB structures and the net_buf /
-	 * net_pkt pools placed here by alif_non_cacheable.ld) and is shared with
-	 * the DWC3 USB controller. Sized as a 1 MB block in SRAM0.
-	 * Mapped without cache attributes so the controller and the CPU
-	 * share a coherent view without explicit cache maintenance. */
-	MMU_REGION_FLAT_ENTRY("NON_CACHEABLE0",
-		DT_REG_ADDR(DT_NODELABEL(non_cacheable)),
-		DT_REG_SIZE(DT_NODELABEL(non_cacheable)),
-		MT_NORMAL | MPERM_R | MPERM_W | MATTR_SHARED |
-		MATTR_MAY_MAP_L1_SECTION),
-#endif
-
 };
 
 const struct arm_mmu_config mmu_config = {
